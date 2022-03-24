@@ -73,6 +73,25 @@ function renderBoard(board) {
 }
 
 
+function cellClicked(elCell, cellI, cellJ) {
+    console.log('clickedCell', clickedCell)
+
+
+    var clickedCell = gBoard[cellI][cellJ]
+    clickedCell.isShown = true
+
+    for (var i = 0; gBoard.length - 1; i++) {
+        for (var j = 0; j <= gBoard[i].length - 1; j++) {
+            var minesCount = setMinesNegsCount(i, j, gBoard)
+            var activeCell = gBoard[i][j]
+            activeCell.minesAroundCount = minesCount
+        }
+    }
+
+    elCell.innerHTML = clickedCell.minesAroundCount
+}
+
+
 // setMinesNegsCount(gBoard)
 function setMinesNegsCount(cellI, cellJ, gBoard) {
     var minesCount = 0
@@ -89,20 +108,6 @@ function setMinesNegsCount(cellI, cellJ, gBoard) {
     return minesCount
 }
 
-function cellClicked(elCell, cellI, cellJ) {
-    console.log('clickedCell', clickedCell)
-
-    var clickedCell = gBoard[cellI][cellJ]
-    for (var i = 0; gBoard.length - 1; i++) {
-        for (var j = 0; j <= gBoard[i].length - 1; j++) {
-            var minesCount = setMinesNegsCount(i, j, gBoard)
-            var activeCell = gBoard[i][j]
-            activeCell.minesAroundCount = minesCount
-        }
-    }
-
-    elCell.innerHTML = clickedCell.minesAroundCount
-}
 
 function cellMarked(elCell) {
 

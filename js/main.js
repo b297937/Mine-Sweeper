@@ -35,8 +35,8 @@ function buildBoard() {
             board[i][j] = cell
         }
     }
-    board[1][1].isMine = true
-    board[0][0].isMine = true
+    // board[1][1].isMine = true
+    // board[0][0].isMine = true
     console.table(board)
     // console.log('board', board)
     return board;
@@ -46,7 +46,7 @@ function createCell() {
     var cell = {
 
         minesAroundCount: 0,
-        isShown: true,
+        isShown: false,
         isMine: false,
         isMarked: true,
     }
@@ -76,14 +76,24 @@ function renderBoard(board) {
 
 
 function cellClicked(cellI, cellJ, elCell) {
-    if (isStart ===true){
+    if (isStart === true) {
         counter()
         isStart = false
     }
 
     var clickedCell = gBoard[cellI][cellJ]
-    clickedCell.isShown = true
+    clickedCell.isShown = false
 
+    if (clickedCell.isMine) {
+        elCell.style.backgroundColor = 'red'
+        elCell.innerHTML = MINE
+    }
+
+    if (gGame.isFirstClick === true) {
+        for (var i = 0; i < gLevel.mines; i++) {
+            getMinesRandom()
+        }
+    }
 
     for (var i = 0; i <= gBoard.length - 1; i++) {
         for (var j = 0; j <= gBoard[0].length - 1; j++) {
@@ -97,7 +107,6 @@ function cellClicked(cellI, cellJ, elCell) {
 }
 
 
-// setMinesNegsCount(gBoard)
 function setMinesNegsCount(cellI, cellJ, gBoard) {
     var minesCount = 0
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -121,8 +130,18 @@ function expandShown(board, elCell, i, j) {
 
 }
 
+function getMinesRandom() {
+    var i = getRandomInt(0, gBoard.length - 1)
+    console.log('i', i)
+    var j = getRandomInt(0, gBoard.length - 1)
+    console.log('j', j)
 
-// 
+    var currCell = gBoard[i][j]
+    currCell.isMine = true
+
+
+}
+
 
 function beginner() {
     gLevel.size = 4, 2
@@ -139,6 +158,10 @@ function extreme() {
 
 function counter() {
     timer = setInterval(stopWatch, 1000)
+}
+
+function stopCounter() {
+    clearInterval(timer)
 }
 
 function stopWatch() {

@@ -1,0 +1,25 @@
+body {
+    text-align: center;
+}
+
+h1 {
+    background-color: greenyellow;
+    line-height: 500%;
+}
+
+h2 {
+    background-color: lavender;
+}
+
+table{
+    text-align: center;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+td{
+    cursor: pointer;
+    border: solid black;
+    width: 20px;
+    height: 20px;
+}

@@ -1,15 +1,18 @@
 'use strict'
 
 const MINE = '💥'
+const EMPTY = ' '
 const FLAG = '🚩'
 
 var gBoard
+var isStart
 
 var gGame = {
     isOn: false,
     shownCount: 0,
     markedCount: 0,
-    secsPassed: 0
+    secsPassed: 0,
+    isFirstClick: true
 }
 
 var gLevel = {
@@ -55,7 +58,7 @@ function renderBoard(board) {
         strHTML += '<tr>'
         for (var j = 0; j < board[0].length; j++) {
             var currCell = board[i][j]
-            var mine = (currCell.isMine) ? MINE : ' '
+            var mine = (currCell.isMine) ? MINE : EMPTY
             var cellClass = 'cell cell'
             // console.log('.cellClass', cellClass)
             strHTML += `<td onclick="cellClicked(${i},${j},this)" class="${cellClass}-${i}-${j}">${mine}</td>`
@@ -67,25 +70,8 @@ function renderBoard(board) {
 
     var elBoard = document.querySelector('.board')
     elBoard.innerHTML = strHTML
-
 }
 
-negsCount(gGame.shownCount)
-// console.log('negsCount', negsCount)
-function negsCount(board) {
-    console.log('board', board)
-    for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board[i].length; j++) {
-            var minesCount = setMinesNegsCount(i,j,gBoard)
-            console.log('minesCount', minesCount)
-            if (minesCount === 0) gBoard[i][j].minesAroundCount = ' '
-            if(minesCount) gBoard[i][j].minesAroundCount = minesCount
-            
-        }
-    }
-    console.log('gGame.shownCount', gGame.isOn)
-    return gGame.isOn
-}
 
 // setMinesNegsCount(gBoard)
 function setMinesNegsCount(cellI, cellJ, gBoard) {
@@ -103,19 +89,20 @@ function setMinesNegsCount(cellI, cellJ, gBoard) {
     return minesCount
 }
 
-
 function cellClicked(elCell, cellI, cellJ) {
+    console.log('clickedCell', clickedCell)
 
-    // if (gBoard[cellI][cellJ] === MINE) {
+    var clickedCell = gBoard[cellI][cellJ]
+    for (var i = 0; gBoard.length - 1; i++) {
+        for (var j = 0; j <= gBoard[i].length - 1; j++) {
+            var minesCount = setMinesNegsCount(i, j, gBoard)
+            var activeCell = gBoard[i][j]
+            activeCell.minesAroundCount = minesCount
+        }
+    }
 
-    // gBoard[cellI][cellJ] = ' '
-
-    // elCell.innerText = ' '
-    // }
+    elCell.innerHTML = clickedCell.minesAroundCount
 }
-
-
-
 
 function cellMarked(elCell) {
 
@@ -123,6 +110,9 @@ function cellMarked(elCell) {
 function expandShown(board, elCell, i, j) {
 
 }
+
+
+// 
 
 function beginner() {
     gLevel.size = 4, 2
@@ -135,6 +125,10 @@ function medium() {
 function extreme() {
     gLevel.size = 12, 30
     initGame()
+}
+
+function counter() {
+    timer = setInterval(stopWatch, 1000)
 }
 
 function stopWatch() {
@@ -150,3 +144,8 @@ function stopWatch() {
     elClock.innerText = `${seconds}:${milSeconds}`
 }
 
+function getRandomInt(min, max) {
+    var random = (Math.random() * (max - min + 1) + min)
+    random = Math.floor(random)
+    return random
+}

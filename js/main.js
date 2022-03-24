@@ -28,7 +28,8 @@ function initGame() {
 function buildBoard() {
     var board = [];
     for (var i = 0; i < gLevel.size; i++) {
-        board.push([]);
+        board[i] = []
+        // board.push([]);
         for (var j = 0; j < gLevel.size; j++) {
             var cell = createCell()
             board[i][j] = cell
@@ -37,6 +38,7 @@ function buildBoard() {
     board[1][1].isMine = true
     board[0][0].isMine = true
     console.table(board)
+    // console.log('board', board)
     return board;
 }
 
@@ -73,15 +75,18 @@ function renderBoard(board) {
 }
 
 
-function cellClicked(elCell, cellI, cellJ) {
-    console.log('clickedCell', clickedCell)
-
+function cellClicked(cellI, cellJ, elCell) {
+    if (isStart ===true){
+        counter()
+        isStart = false
+    }
 
     var clickedCell = gBoard[cellI][cellJ]
     clickedCell.isShown = true
 
-    for (var i = 0; gBoard.length - 1; i++) {
-        for (var j = 0; j <= gBoard[i].length - 1; j++) {
+
+    for (var i = 0; i <= gBoard.length - 1; i++) {
+        for (var j = 0; j <= gBoard[0].length - 1; j++) {
             var minesCount = setMinesNegsCount(i, j, gBoard)
             var activeCell = gBoard[i][j]
             activeCell.minesAroundCount = minesCount

@@ -87,6 +87,7 @@ function cellClicked(cellI, cellJ, elCell) {
     if (clickedCell.isMine) {
         elCell.style.backgroundColor = 'red'
         elCell.innerHTML = MINE
+        return
     }
 
     if (gGame.isFirstClick === true) {
@@ -101,6 +102,7 @@ function cellClicked(cellI, cellJ, elCell) {
             var activeCell = gBoard[i][j]
             activeCell.minesAroundCount = minesCount
         }
+        gGame.isFirstClick = false
     }
 
     elCell.innerHTML = clickedCell.minesAroundCount

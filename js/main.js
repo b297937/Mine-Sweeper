@@ -6,7 +6,7 @@ const FLAG = '🚩'
 
 var gBoard
 var isStart = true
-var countTime
+var countTime 
 var min = 0
 var sec = 0
 var ms = 0
@@ -26,6 +26,7 @@ var gLevel = {
 
 function initGame() {
     // debugger
+    timerShown.innerText = '00:00'
     isStart = true
     gBoard = buildBoard()
     renderBoard(gBoard)
@@ -50,7 +51,7 @@ function buildBoard() {
 
 function createCell() {
     var cell = {
-
+        
         minesAroundCount: 0,
         isShown: false,
         isMine: false,
@@ -147,6 +148,7 @@ function checkGameOver() {
     // gLevel.mines = true
     if (gGame.markedCount === gLevel.mines) {
         stopCounter()
+        gGame.isFirstClick = true
     }
     
     
@@ -215,7 +217,8 @@ var faces = document.querySelector('.faces')
 function smiley() {
     faces.innerHTML = '😁'
     initGame()
-    getMinesRandom()
+    gGame.isFirstClick = true
+    // getMinesRandom()
 }
 
 
@@ -238,26 +241,28 @@ function extreme() {
 function counter() {
     console.log('timer')
     countTime = setInterval(startWatch, 1000)
+    console.log('ww',countTime)
+
 }
 
 function stopCounter() {
-    console.log('stop time')
+    console.log('stop time',countTime)
+    ms = 0
     clearInterval(countTime)
 }
 
 var timerShown = document.querySelector('.count-time')
 function startWatch() {
-    // console.log('dvs');
     ms = ms + 1
+    console.log('dvs');
 
-    if (sec >= 60) {
+    if (ms >= 60) {
         ms = 0
-        sec = 0
         min = min + 1
     }
-    document.querySelector('.count-time').innerHTML =
+    document.querySelector('.count-time').innerHTML = min.toString().padStart(2,0) +':' + ms.toString().padStart(2,0)
 
-        (ms > 99 ? ms : ms > 9 ? "00:" + ms : "0:0" + ms);
+        // (ms > 99 ? ms : ms > 9 ? "00:" + ms : "0:0" + ms);
 }
 
 function getRandomInt(min, max) {

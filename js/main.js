@@ -145,7 +145,9 @@ function checkGameOver() {
     console.log('game over')
 
     if (gGame.markedCount === gLevel.mines) {
+        renderBoard()
         stopCounter()
+        console.log('22333');
     }
 
 

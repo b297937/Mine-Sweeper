@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    background-image: url('/img/sisters11080p.jpg');
+    background-image: url('img/sisters11080p.jpg');
 }
 
 h1 {
@@ -11,9 +11,6 @@ h1 {
     line-height: 300%;
 }
 
-/* h2 { */
-    /* background-color: lavender; */
-/* } */
 .board{
     display: flex;
     justify-content: center;
@@ -52,6 +49,7 @@ cursor: pointer;
 }
 
 .faces{
+    all: unset;
     background-size: cover;
     padding: 0px;
     width: 40px;

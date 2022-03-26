@@ -226,16 +226,22 @@ function beginner() {
     gLevel.size = 4
     gLevel.mines = 2
     initGame()
+    gGame.isFirstClick = true
+
 }
 function medium() {
     gLevel.size = 8
     gLevel.mines = 12
     initGame()
+    gGame.isFirstClick = true
+
 }
 function extreme() {
     gLevel.size = 12
     gLevel.mines = 30
     initGame()
+    gGame.isFirstClick = true
+
 }
 
 function counter() {

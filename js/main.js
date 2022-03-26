@@ -6,7 +6,7 @@ const FLAG = '🚩'
 
 var gBoard
 var isStart = true
-var count = 0
+var countTime
 var min = 0
 var sec = 0
 var ms = 0
@@ -25,6 +25,8 @@ var gLevel = {
 }
 
 function initGame() {
+    // debugger
+    isStart = true
     gBoard = buildBoard()
     renderBoard(gBoard)
 }
@@ -43,7 +45,7 @@ function buildBoard() {
     // board[0][0].isMine = true
     console.table(board)
     // console.log('board', board)
-    return board;
+    return board
 }
 
 function createCell() {
@@ -67,7 +69,7 @@ function renderBoard(board) {
             var mine = (currCell.isMine) ? MINE : EMPTY
             var cellClass = 'cell cell'
             // console.log('.cellClass', cellClass)
-            strHTML += `<td oncontextmenu=cellMarked(${i}-${j},this) "cell onclick="cellClicked(${i},${j},this)" class="${cellClass}-${i}-${j}">${mine}</td>`
+            strHTML += `<td oncontextmenu="cellMarked(${i},${j},this)" "cell onclick="cellClicked(${i},${j},this)" class="${cellClass}-${i}-${j}">${mine}</td>`
 
         }
         strHTML += '</tr>'
@@ -81,8 +83,7 @@ function renderBoard(board) {
 
 function cellClicked(cellI, cellJ, elCell) {
 
-    if (isStart === true) {
-        console.log('isStartChek');
+    if (isStart) {
         counter()
         isStart = false
 
@@ -90,15 +91,17 @@ function cellClicked(cellI, cellJ, elCell) {
 
     var clickedCell = gBoard[cellI][cellJ]
     clickedCell.isShown = false
+    // console.log(clickedCell);
 
     if (clickedCell.isMine) {
+        // debugger
         // console.log('11');
         elCell.style.backgroundColor = 'red'
         elCell.innerHTML = MINE
         stopCounter()
         showAllcells()
         checkGameOver()
-        isStart = false
+        // isStart = false
         faces.innerHTML = '🙁'
         return
     }
@@ -133,7 +136,7 @@ function setMinesNegsCount(cellI, cellJ, gBoard) {
             if (count.isMine) minesCount++
         }
     }
-    console.log('minesCount', minesCount)
+    // console.log('minesCount', minesCount)
     return minesCount
 }
 
@@ -141,19 +144,43 @@ function setMinesNegsCount(cellI, cellJ, gBoard) {
 function checkGameOver() {
     console.log('game over')
 
+    if (gGame.markedCount === gLevel.mines) {
+        stopCounter()
+    }
+
+
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
             var currCell = gBoard[i][j]
             // console.log('currCell', currCell)
 
-            if (currCell.isMine)
+            if (currCell.isMine) {
                 currCell.isShown = true
+            }
         }
     }
     return showAllcells()
 }
 
-function sellMarked (){
+function cellMarked(i, j, elCell) {
+    // console.log('currCell', cellMarked)
+    window.event.preventDefault()
+    var currCell = gBoard[i][j]
+
+    if (currCell.isMarked) {
+        currCell.isMarked = false
+        elCell.innerHTML = EMPTY
+        return
+
+    }
+
+    currCell.isMarked = true
+    elCell.innerHTML = FLAG
+    if (currCell.isMine === true) {
+        elCell.markedCount++
+        checkGameOver()
+    }
+
 
 }
 
@@ -165,8 +192,13 @@ function showAllcells() {
             var currCell = gBoard[i][j]
             // console.log('currCell', currCell)
 
-            if (currCell.isMine)
+            if (currCell.isMine) {
                 cell.innerHTML = MINE
+            }
+            // justMine or all cells
+            if (currCell.isShown === false && currCell.isMine === false) {
+                cellClicked (i,j,cell)
+            }
         }
     }
 }
@@ -179,14 +211,13 @@ function getMinesRandom() {
 
     var currCell = gBoard[i][j]
     currCell.isMine = true
-
-
 }
 
 var faces = document.querySelector('.faces')
-function smiley(){
-    initGame()
+function smiley() {
     faces.innerHTML = '😁'
+    initGame()
+    getMinesRandom()
 }
 
 
@@ -208,13 +239,15 @@ function extreme() {
 
 function counter() {
     console.log('timer')
-    count = setInterval(startWatch, 1000)
+    countTime = setInterval(startWatch, 1000)
 }
 
 function stopCounter() {
-    clearInterval(count)
+    clearInterval(countTime)
+    console.log('stop time')
 }
 
+var timerShown = document.querySelector('.count-time')
 function startWatch() {
     // console.log('dvs');
     ms = ms + 1

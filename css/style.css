@@ -1,32 +1,73 @@
 body {
     text-align: center;
+    background-image: url('/img/sisters11080p.jpg');
 }
 
 h1 {
-    background-color: greenyellow;
-    line-height: 500%;
+    font-family: 'Orbitron', sans-serif;
+    /* background-color: rgb(173, 255, 47); */
+    /* display: flex; */
+    color: white;
+    line-height: 300%;
 }
 
-h2 {
-    background-color: lavender;
-}
+/* h2 { */
+    /* background-color: lavender; */
+/* } */
 .board{
     display: flex;
     justify-content: center;
 }
-
+.count-time{
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: xx-large;
+}
 table{
     text-align: center;
     border-collapse: separate;
     text-indent: initial;
     border-spacing: 2px;
+    
 }
 td{
     cursor: pointer;
-    border: solid black;
-    width: 30px;
-    height: 30px;
+    border: solid rgb(19, 81, 197);
+    width: 50px;
+    height: 50px;
 }
 .cell {
-    font-size: larger;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 40px;
+    color: white;
 }
+
+button {
+font-family: 'Orbitron', sans-serif;
+background-color: rgb(255, 255, 255);
+border: none;
+padding: 3px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.faces{
+    background-size: cover;
+    padding: 0px;
+    width: 40px;
+    margin: 3px;
+}
+/* .faces:hover{
+    background-color: rgb(89, 0, 255);
+}  */
+
+button:hover{
+    color: whitesmoke;
+    background-color: rgb(89, 0, 255);
+}
+
+.footer {
+    color: hsl(0, 1%, 34%)
+}
+
+@import url('https://fonts.google.com/share?selection.family=Orbitron:wght@800');

@@ -5,10 +5,9 @@ body {
 
 h1 {
     font-family: 'Orbitron', sans-serif;
-    /* background-color: rgb(173, 255, 47); */
-    /* display: flex; */
     color: white;
     line-height: 300%;
+    text-size-adjust: 600px;
 }
 
 .board{
@@ -16,6 +15,7 @@ h1 {
     justify-content: center;
 }
 .count-time{
+    margin-top: 15px;
     font-family: 'Orbitron', sans-serif;
     color: white;
     font-size: xx-large;
